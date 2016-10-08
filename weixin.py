@@ -680,10 +680,16 @@ class WebWeixin(object):
             print '%s |%s| %s -> %s: %s' % (message_id, groupName.strip(), srcName.strip(), dstName.strip(), content.replace('<br/>', '\n'))
             logging.info('%s |%s| %s -> %s: %s' % (message_id, groupName.strip(),
                                                    srcName.strip(), dstName.strip(), content.replace('<br/>', '\n')))
+            title = groupName.strip() + '-' + srcName.strip()
+            os.system("notify-send "+title+" '"+content.replace('<br/>', '\n')+"' -t 800")
+        
         else:
             print '%s %s -> %s: %s' % (message_id, srcName.strip(), dstName.strip(), content.replace('<br/>', '\n'))
             logging.info('%s %s -> %s: %s' % (message_id, srcName.strip(),
                                               dstName.strip(), content.replace('<br/>', '\n')))
+
+            title = srcName.strip()
+            os.system("notify-send "+title+" '"+content.replace('<br/>', '\n')+"' -t 800")
 
     def handleMsg(self, r):
         for msg in r['AddMsgList']:
@@ -1078,7 +1084,7 @@ if __name__ == '__main__':
 
     logger = logging.getLogger(__name__)
     import coloredlogs
-    coloredlogs.install(level='DEBUG')
+    coloredlogs.install(level='INFO')
 
     webwx = WebWeixin()
     webwx.start()
